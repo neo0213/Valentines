@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neo's Invitation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="icon" type="image/x-icon" href="heart.png">
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background: url('/bg-2.jpeg') no-repeat;
+            background-size: cover;
+        }
+
+
+        .yes-btn {
+            background-color: green;
+            border: none;
+            color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            font-size: 20px;
+        }
+
+        .no-btn {
+            background-color: red;
+            border: none;
+            color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            font-size: 20px;
+        }
+        
+        .container {
+            width: 500px;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out; 
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 20px;
+        }
+
+        .container.show {
+        opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5 p-5 bg-white rounded">
+        <div class="d-flex justify-content-center mb-5">
+            <img width="200px" height="200px" id="img-emotion" src="/start_img.gif" alt="">
+        </div>
+
+        <h2 class="text-center">Will you be my valentine?</h2>
+        <div class="row mt-3">
+            <div id="yesBtn" class="col-6 d-flex justify-content-end">
+                <button class="yes-btn btn btn-success">
+                    Yes 😁
+                </button>
+            </div>
+            <div class="col-6">
+                <button id="noBtn" class="no-btn btn btn-danger">
+                    No 🥺
+                </button>
+            </div>
+        </div>
+
+    </div>
+</body>
+<script>
+    let noHover = 0;
+    let isAnimating = false;
+    document.getElementById('noBtn').addEventListener('mouseover', function(event) {
+        if (isAnimating) {
+        return; 
+        }
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        let textArr = ['Not this time', 'Please click yes', 'R u sure?', 'Are you really really suree?', '😭😭😭😭', 'Click yes', 'Change ur mind?'];
+        this.innerText = textArr[noHover];
+        noHover++;
+        if(noHover == 6){
+            noHover = 0;
+        }
+        let imgArr = ['no-1.gif', 'no-2.gif', 'no-3.gif', 'no-4.gif'];
+        let img = document.getElementById('img-emotion');
+
+        img.src = imgArr[Math.floor(Math.random() * imgArr.length)];
+
+        let btn = this;
+
+        let currentTop = btn.offsetTop;
+        let currentLeft = btn.offsetLeft;
+
+        let viewportWidth = window.innerWidth;
+        let viewportHeight = window.innerHeight;
+        
+        let randomTop = Math.floor(Math.random() * (viewportHeight - btn.clientHeight));
+        let randomLeft = Math.floor(Math.random() * (viewportWidth - btn.clientWidth));
+
+        btn.style.position = 'absolute';
+        btn.style.top = currentTop + 'px';
+        btn.style.left = currentLeft + 'px';
+        btn.style.transition = 'all 0.5s ease';
+
+        setTimeout(() => {
+            btn.style.top = randomTop + 'px';
+            btn.style.left = randomLeft + 'px';
+
+
+        setTimeout(() => {
+            isAnimating = false;
+        }, 500);
+        }, 100)
+
+
+    });
+
+    document.getElementById('yesBtn').addEventListener('click', function() {
+        let img = document.getElementById('img-emotion');
+        img.src = '/yes-1.gif';
+
+        const confettiImg = document.createElement('img');
+
+// Set the src attribute to your confetti image
+confettiImg.src = 'conf.gif';
+
+// Set the height property to 100%
+confettiImg.style.height = '100%';
+confettiImg.style.widows = '100%';
+// Set any additional styles or attributes as needed
+confettiImg.style.position = 'fixed';
+confettiImg.style.top = '50%';
+confettiImg.style.left = '50%';
+confettiImg.style.transform = 'translate(-50%, -50%)';
+confettiImg.style.zIndex = '9999';
+
+// Append the img element to the body or another container
+document.body.appendChild(confettiImg);
+
+    });
+
+    var container = document.querySelector('.container');
+    container.classList.add('show');
+
+
+</script>
+</html>
